@@ -20,9 +20,7 @@
             overflow: hidden;
         }
 
-        /* ====================================
-           WEATHER THEMES - BACKGROUNDS
-        ==================================== */
+        /* WEATHER THEMES */
         body.sunny {
             background: linear-gradient(180deg, #87CEEB 0%, #E0F7FA 50%, #FFF8DC 100%);
         }
@@ -51,9 +49,7 @@
             background: linear-gradient(180deg, #4A90A4 0%, #6BB3C9 50%, #87CEEB 100%);
         }
 
-        /* ====================================
-           LEFT PANEL - Glassmorphism
-        ==================================== */
+        /* LEFT PANEL */
         .left-panel {
             width: 280px;
             min-height: 100vh;
@@ -201,22 +197,25 @@
 
         .stat-label {
             font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.7);
+            color: white;
+            opacity: 1;
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: color 0.8s ease;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
         }
 
         body.snowy .stat-label,
         body.foggy .stat-label {
-            color: rgba(0, 0, 0, 0.5);
+            color: #333;
         }
 
         .stat-value {
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1.4rem;
+            font-weight: 700;
             color: white;
             transition: color 0.8s ease;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
         }
 
         body.snowy .stat-value,
@@ -224,9 +223,7 @@
             color: #333;
         }
 
-        /* ====================================
-           RIGHT PANEL
-        ==================================== */
+        /* RIGHT PANEL */
         .right-panel {
             flex: 1;
             position: relative;
@@ -324,9 +321,7 @@
             color: white;
         }
 
-        /* ====================================
-           HOURLY FORECAST
-        ==================================== */
+        /* HOURLY FORECAST */
         .hourly-section {
             margin-top: auto;
             background: rgba(255, 255, 255, 0.8);
@@ -361,50 +356,49 @@
             color: white;
         }
 
+        /* HOURLY CHART CONTAINER */
+        .hourly-chart-container {
+            position: relative;
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: visible;
+        }
+
+        .hourly-chart-container::-webkit-scrollbar {
+            height: 0px;
+        }
+
+        .hourly-chart-container {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
         .hourly-chart {
             position: relative;
-            height: 120px;
             display: flex;
-            justify-content: space-between;
+            flex-direction: row;
             align-items: flex-end;
-            padding-top: 30px;
+            gap: 10px;
+            padding: 10px 10px 0 10px;
+            min-width: max-content;
         }
 
-        .chart-line {
-            position: absolute;
-            bottom: 30px;
-            left: 30px;
-            right: 30px;
-            height: 3px;
-            background: linear-gradient(90deg, #FF6B35, #FF8C42);
-            border-radius: 2px;
-        }
-
+        /* Each hour column */
         .hourly-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            z-index: 2;
+            min-width: 50px;
             position: relative;
         }
 
-        .hourly-item .time {
-            font-size: 0.75rem;
-            color: #888;
-            margin-bottom: 8px;
-            transition: color 0.8s ease;
-        }
-
-        body.rainy .hourly-item .time,
-        body.thunderstorm .hourly-item .time {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
+        /* Temperature label - TOP */
         .hourly-item .temp {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #1a1a2e;
-            margin-bottom: 5px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+            text-align: center;
             transition: color 0.8s ease;
         }
 
@@ -413,24 +407,46 @@
             color: white;
         }
 
+        /* Time label - BOTTOM */
+        .hourly-item .time {
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 8px;
+            text-align: center;
+            transition: color 0.8s ease;
+        }
+
+        body.rainy .hourly-item .time,
+        body.thunderstorm .hourly-item .time {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Dot container - holds the positioned dot */
+        .dot-container {
+            position: relative;
+            width: 50px;
+            height: 70px;
+        }
+
+        /* Orange dot - positioned via JS */
         .hourly-item .dot {
-            width: 14px;
-            height: 14px;
-            background: linear-gradient(135deg, #FF6B35, #FF8C42);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 10px;
+            background: #FF6B35;
             border-radius: 50%;
-            border: 3px solid white;
-            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+            z-index: 2;
         }
 
         .hourly-item.active .dot {
-            width: 18px;
-            height: 18px;
-            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.6);
+            width: 14px;
+            height: 14px;
+            box-shadow: 0 0 8px rgba(255, 107, 53, 0.6);
         }
 
-        /* ====================================
-           ANIMATED PARTICLES CONTAINER
-        ==================================== */
+        /* PARTICLES */
         .particles-container {
             position: fixed;
             top: 0;
@@ -442,37 +458,20 @@
             overflow: hidden;
         }
 
-        /* ====================================
-           RAIN EFFECT
-        ==================================== */
         .rain-drop {
             position: absolute;
             width: 2px;
-            height: 20px;
             background: linear-gradient(transparent, rgba(174, 194, 224, 0.6));
             animation: rain-fall linear infinite;
         }
 
         @keyframes rain-fall {
-            0% {
-                transform: translateY(-100px);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh);
-                opacity: 0;
-            }
+            0% { transform: translateY(-100px); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
         }
 
-        /* ====================================
-           SNOW EFFECT
-        ==================================== */
         .snowflake {
             position: absolute;
             color: white;
@@ -482,25 +481,12 @@
         }
 
         @keyframes snow-fall {
-            0% {
-                transform: translateY(-50px) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 0.8;
-            }
-            100% {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
+            0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
 
-        /* ====================================
-           CLOUD EFFECT
-        ==================================== */
         .floating-cloud {
             position: absolute;
             background: rgba(255, 255, 255, 0.8);
@@ -508,26 +494,11 @@
             opacity: 0.7;
         }
 
-        .floating-cloud::before,
-        .floating-cloud::after {
-            content: '';
-            position: absolute;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-        }
-
         @keyframes cloud-move {
-            0% {
-                transform: translateX(-100%);
-            }
-            100% {
-                transform: translateX(calc(100vw + 100%));
-            }
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(calc(100vw + 100%)); }
         }
 
-        /* ====================================
-           LIGHTNING EFFECT
-        ==================================== */
         .lightning-flash {
             position: fixed;
             top: 0;
@@ -552,9 +523,6 @@
             100% { opacity: 0; }
         }
 
-        /* ====================================
-           WIND STREAKS
-        ==================================== */
         .wind-streak {
             position: absolute;
             height: 2px;
@@ -563,51 +531,25 @@
         }
 
         @keyframes wind-move {
-            0% {
-                transform: translateX(-100%);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 0.5;
-            }
-            100% {
-                transform: translateX(calc(100vw + 100%));
-                opacity: 0;
-            }
+            0% { transform: translateX(-100%); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 0.5; }
+            100% { transform: translateX(calc(100vw + 100%)); opacity: 0; }
         }
 
-        /* ====================================
-           FOG EFFECT
-        ==================================== */
         .fog-layer {
             position: absolute;
             width: 200%;
             height: 100%;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                rgba(200, 200, 200, 0.3) 25%, 
-                rgba(200, 200, 200, 0.5) 50%, 
-                rgba(200, 200, 200, 0.3) 75%, 
-                transparent 100%
-            );
+            background: linear-gradient(90deg, transparent 0%, rgba(200, 200, 200, 0.3) 25%, rgba(200, 200, 200, 0.5) 50%, rgba(200, 200, 200, 0.3) 75%, transparent 100%);
             animation: fog-drift 20s linear infinite;
         }
 
         @keyframes fog-drift {
-            0% {
-                transform: translateX(-50%);
-            }
-            100% {
-                transform: translateX(0%);
-            }
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0%); }
         }
 
-        /* ====================================
-           SUN FOR SUNNY DAYS
-        ==================================== */
         .sun-element {
             position: absolute;
             top: 50px;
@@ -627,9 +569,6 @@
             50% { transform: scale(1.05); }
         }
 
-        /* ====================================
-           LOADING STATE
-        ==================================== */
         .loading {
             display: none;
             position: fixed;
@@ -661,56 +600,22 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* ====================================
-           RESPONSIVE
-        ==================================== */
         @media (max-width: 1024px) {
-            body {
-                flex-direction: column;
-            }
-
-            .left-panel {
-                width: 100%;
-                min-height: auto;
-                padding: 20px;
-            }
-
-            .right-panel {
-                min-height: auto;
-            }
-
-            .right-content {
-                padding: 30px 20px;
-            }
-
-            .condition-text {
-                font-size: 2.5rem;
-            }
-
-            .hourly-chart {
-                overflow-x: auto;
-                padding-bottom: 10px;
-            }
-
-            .hourly-item {
-                min-width: 60px;
-            }
+            body { flex-direction: column; }
+            .left-panel { width: 100%; min-height: auto; padding: 20px; }
+            .right-panel { min-height: auto; }
+            .right-content { padding: 30px 20px; }
+            .condition-text { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body class="sunny">
-    <!-- Particles Container -->
     <div class="particles-container" id="particlesContainer"></div>
-
-    <!-- Lightning Flash -->
     <div class="lightning-flash" id="lightningFlash"></div>
-
-    <!-- Loading Overlay -->
     <div class="loading" id="loading">
         <div class="spinner"></div>
     </div>
 
-    <!-- LEFT PANEL -->
     <div class="left-panel">
         <div class="search-section">
             <div class="search-box">
@@ -721,15 +626,11 @@
                 </svg>
             </div>
         </div>
-
         <div class="weather-icon-large" id="weatherIcon">☀️</div>
-
         <div class="temperature-display">
             <div class="temperature-value"><span id="temperature">31</span><span>°</span></div>
         </div>
-
         <div class="feels-like">Feels like: <span id="feelsLike">34</span>°</div>
-
         <div class="weather-stats">
             <div class="stat-item">
                 <div class="stat-icon">💧</div>
@@ -738,17 +639,14 @@
             </div>
             <div class="stat-item">
                 <div class="stat-icon">☁️</div>
-                <div class="stat-label">Cloud</div>
+                <div class="stat-label">Clouds</div>
                 <div class="stat-value"><span id="cloudCover">20</span>%</div>
             </div>
         </div>
     </div>
 
-    <!-- RIGHT PANEL -->
     <div class="right-panel">
-        <!-- Sun Element (hidden by default) -->
         <div class="sun-element" id="sunElement"></div>
-
         <div class="right-content">
             <div class="header-section">
                 <div class="weather-label">Weather Forecast</div>
@@ -763,28 +661,25 @@
                     <span id="dateTime">Monday, 12 Apr</span>
                 </div>
             </div>
-
             <div class="weather-details-paragraph">
                 <strong>Wind:</strong> <span id="windSpeed">15</span> km/h, 
                 <strong>Pressure:</strong> <span id="pressure">1013</span> hPa, 
                 <strong>Visibility:</strong> <span id="visibility">10</span> km. 
                 Today's maximum temperature is <span id="tempMax">35</span>° and minimum is <span id="tempMin">22</span>°.
             </div>
-
             <div class="hourly-section">
                 <div class="hourly-title">
                     <span>🌡️</span>
                     <span>Temperature Per Hour</span>
                 </div>
-                <div class="hourly-chart" id="hourlyChart">
-                    <div class="chart-line"></div>
+                <div class="hourly-chart-container" id="hourlyChartContainer">
+                    <div class="hourly-chart" id="hourlyChart"></div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Weather code mapping to themes and descriptions
         const weatherThemes = {
             0: { theme: 'sunny', emoji: '☀️', description: 'Clear Sky' },
             1: { theme: 'sunny', emoji: '🌤️', description: 'Mainly Clear' },
@@ -815,15 +710,12 @@
         let lightningInterval = null;
 
         function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                getWeather();
-            }
+            if (event.key === 'Enter') getWeather();
         }
 
         async function getWeather() {
             const city = document.getElementById('cityInput').value.trim();
             if (!city) return;
-
             showLoading(true);
 
             try {
@@ -832,7 +724,7 @@
                 const geoData = await geoResponse.json();
 
                 if (!geoData.results || geoData.results.length === 0) {
-                    alert('City not found. Please try another search.');
+                    alert('City not found!');
                     showLoading(false);
                     return;
                 }
@@ -842,15 +734,7 @@
                 const lon = location.longitude;
                 const timezone = location.timezone || 'UTC';
 
-                const weatherUrl = (
-                    `https://api.open-meteo.com/v1/forecast` +
-                    `?latitude=${lat}&longitude=${lon}` +
-                    `&current_weather=true` +
-                    `&hourly=temperature_2m,relative_humidity_2m,weathercode` +
-                    `&daily=temperature_2m_max,temperature_2m_min` +
-                    `&timezone=${timezone}` +
-                    `&forecast_days=1`
-                );
+                const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,relative_humidity_2m,weathercode&daily=temperature_2m_max,temperature_2m_min&timezone=${timezone}&forecast_days=1`;
 
                 const weatherResponse = await fetch(weatherUrl);
                 const weatherData = await weatherResponse.json();
@@ -858,16 +742,12 @@
                 const current = weatherData.current_weather;
                 const hourly = weatherData.hourly;
                 const daily = weatherData.daily;
-
                 const tempMax = daily.temperature_2m_max[0];
                 const tempMin = daily.temperature_2m_min[0];
                 const feelsLike = Math.round(current.temperature + 2);
-
-                // Get weather theme
                 const weatherCode = current.weathercode;
                 const themeInfo = weatherThemes[weatherCode] || weatherThemes[0];
 
-                // Update UI
                 document.getElementById('temperature').textContent = Math.round(current.temperature);
                 document.getElementById('feelsLike').textContent = feelsLike;
                 document.getElementById('humidity').textContent = hourly.relative_humidity_2m[0] || 50;
@@ -882,20 +762,15 @@
                 document.getElementById('tempMin').textContent = Math.round(tempMin);
 
                 const now = new Date();
-                const options = { weekday: 'long', day: 'numeric', month: 'short' };
-                document.getElementById('dateTime').textContent = now.toLocaleDateString('en-US', options);
+                document.getElementById('dateTime').textContent = now.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'short' });
 
-                // Apply theme
                 applyTheme(themeInfo.theme);
-
-                // Generate hourly forecast
                 generateHourlyForecast(hourly);
-
                 showLoading(false);
 
             } catch (error) {
                 console.error('Error:', error);
-                alert('Failed to fetch weather data. Please try again.');
+                alert('Failed to fetch weather data.');
                 showLoading(false);
             }
         }
@@ -905,55 +780,30 @@
             const particlesContainer = document.getElementById('particlesContainer');
             const sunElement = document.getElementById('sunElement');
 
-            // Clear existing theme classes
             body.className = '';
             particlesContainer.innerHTML = '';
 
-            // Stop lightning if running
             if (lightningInterval) {
                 clearInterval(lightningInterval);
                 lightningInterval = null;
             }
 
-            // Apply new theme
             body.classList.add(theme);
+            sunElement.style.display = theme === 'sunny' ? 'block' : 'none';
 
-            // Show sun for sunny weather
-            if (theme === 'sunny') {
-                sunElement.style.display = 'block';
-            } else {
-                sunElement.style.display = 'none';
-            }
-
-            // Create particles based on theme
             switch (theme) {
-                case 'rainy':
-                    createRain();
-                    break;
-                case 'snowy':
-                    createSnow();
-                    break;
-                case 'thunderstorm':
-                    createRain();
-                    createLightning();
-                    break;
-                case 'cloudy':
-                    createClouds();
-                    break;
-                case 'foggy':
-                    createFog();
-                    break;
-                case 'windy':
-                    createWind();
-                    break;
+                case 'rainy': createRain(); break;
+                case 'snowy': createSnow(); break;
+                case 'thunderstorm': createRain(); createLightning(); break;
+                case 'cloudy': createClouds(); break;
+                case 'foggy': createFog(); break;
+                case 'windy': createWind(); break;
             }
         }
 
         function createRain() {
             const container = document.getElementById('particlesContainer');
-            const numDrops = 100;
-
-            for (let i = 0; i < numDrops; i++) {
+            for (let i = 0; i < 100; i++) {
                 const drop = document.createElement('div');
                 drop.className = 'rain-drop';
                 drop.style.left = Math.random() * 100 + '%';
@@ -966,9 +816,7 @@
 
         function createSnow() {
             const container = document.getElementById('particlesContainer');
-            const numFlakes = 50;
-
-            for (let i = 0; i < numFlakes; i++) {
+            for (let i = 0; i < 50; i++) {
                 const flake = document.createElement('div');
                 flake.className = 'snowflake';
                 flake.textContent = '❄';
@@ -982,9 +830,7 @@
 
         function createClouds() {
             const container = document.getElementById('particlesContainer');
-            const numClouds = 5;
-
-            for (let i = 0; i < numClouds; i++) {
+            for (let i = 0; i < 5; i++) {
                 const cloud = document.createElement('div');
                 cloud.className = 'floating-cloud';
                 cloud.style.width = (Math.random() * 150 + 100) + 'px';
@@ -999,9 +845,7 @@
 
         function createFog() {
             const container = document.getElementById('particlesContainer');
-            const numLayers = 3;
-
-            for (let i = 0; i < numLayers; i++) {
+            for (let i = 0; i < 3; i++) {
                 const fog = document.createElement('div');
                 fog.className = 'fog-layer';
                 fog.style.top = (i * 30 + 10) + '%';
@@ -1012,9 +856,7 @@
 
         function createWind() {
             const container = document.getElementById('particlesContainer');
-            const numStreaks = 20;
-
-            for (let i = 0; i < numStreaks; i++) {
+            for (let i = 0; i < 20; i++) {
                 const streak = document.createElement('div');
                 streak.className = 'wind-streak';
                 streak.style.top = Math.random() * 100 + '%';
@@ -1027,57 +869,56 @@
 
         function createLightning() {
             const flash = document.getElementById('lightningFlash');
-            
             const triggerLightning = () => {
                 flash.classList.add('active');
-                setTimeout(() => {
-                    flash.classList.remove('active');
-                }, 200);
-
-                // Random next lightning
-                const nextDelay = Math.random() * 5000 + 2000; // 2-7 seconds
-                lightningInterval = setTimeout(triggerLightning, nextDelay);
+                setTimeout(() => flash.classList.remove('active'), 200);
+                lightningInterval = setTimeout(triggerLightning, Math.random() * 5000 + 2000);
             };
-
-            // Start with initial delay
             lightningInterval = setTimeout(triggerLightning, Math.random() * 3000 + 1000);
         }
 
         function generateHourlyForecast(hourly) {
             const chartContainer = document.getElementById('hourlyChart');
-            const chartLine = chartContainer.querySelector('.chart-line');
-            
-            const existingItems = chartContainer.querySelectorAll('.hourly-item');
-            existingItems.forEach(item => item.remove());
+            chartContainer.innerHTML = '';
 
             const temps = hourly.temperature_2m.slice(0, 12);
+            const now = new Date();
+
+            // Find min and max temps for scaling
             const minTemp = Math.min(...temps);
             const maxTemp = Math.max(...temps);
-            const range = maxTemp - minTemp || 1;
+            const tempRange = maxTemp - minTemp || 1;
 
-            const now = new Date();
-            
+            // Settings
+            const itemWidth = 60;
+            const chartHeight = 70;
+            const yPositions = [];
+
+            // Calculate Y positions for each temperature
+            temps.forEach((temp) => {
+                const normalizedTemp = (temp - minTemp) / tempRange;
+                const y = chartHeight - (normalizedTemp * chartHeight) + 5;
+                yPositions.push(y);
+            });
+
+            // Create hour items
             temps.forEach((temp, index) => {
                 const hour = new Date(now.getTime() + index * 3600000);
-                const timeStr = hour.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-                
-                const normalizedTemp = (temp - minTemp) / range;
-                const bottomOffset = 30 + (normalizedTemp * 60);
+                const timeStr = hour.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+                const y = yPositions[index];
 
                 const item = document.createElement('div');
                 item.className = 'hourly-item' + (index === 0 ? ' active' : '');
                 item.innerHTML = `
-                    <div class="time">${timeStr}</div>
                     <div class="temp">${Math.round(temp)}°</div>
-                    <div class="dot" style="position: absolute; bottom: ${bottomOffset}px;"></div>
+                    <div class="dot-container" style="height: ${chartHeight + 10}px;">
+                        <div class="dot" style="top: ${y - 5}px;"></div>
+                    </div>
+                    <div class="time">${timeStr}</div>
                 `;
+                item.style.width = itemWidth + 'px';
                 
-                item.style.position = 'relative';
-                item.style.display = 'flex';
-                item.style.flexDirection = 'column';
-                item.style.alignItems = 'center';
-                
-                chartContainer.insertBefore(item, chartLine.nextSibling);
+                chartContainer.appendChild(item);
             });
         }
 
@@ -1085,9 +926,8 @@
             document.getElementById('loading').classList.toggle('show', show);
         }
 
-        // Load default weather on page load
         window.addEventListener('load', () => {
-            document.getElementById('cityInput').value = 'New York';
+            document.getElementById('cityInput').value = 'London';
             getWeather();
         });
     </script>
